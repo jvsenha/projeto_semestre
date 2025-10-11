@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+// 1. Adicionar o import da nova tela
+import 'projects_crud_screen.dart'; 
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -442,32 +444,43 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   Widget _buildPopularCard(String titulo, IconData icone, Color cor) {
-    return Container(
-      width: 80,
-      margin: EdgeInsets.only(right: 16),
-      child: Column(
-        children: [
-          Container(
-            width: 64,
-            height: 64,
-            decoration: BoxDecoration(
-              color: cor.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: cor.withOpacity(0.2)),
-            ),
-            child: Icon(icone, color: cor, size: 28),
+    // 2. Envolve o card em um GestureDetector e adiciona a lógica de navegação.
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProjectsCRUDScreen(projectType: titulo),
           ),
-          SizedBox(height: 8),
-          Text(
-            titulo,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: corTexto,
+        );
+      },
+      child: Container(
+        width: 80,
+        margin: EdgeInsets.only(right: 16),
+        child: Column(
+          children: [
+            Container(
+              width: 64,
+              height: 64,
+              decoration: BoxDecoration(
+                color: cor.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: cor.withOpacity(0.2)),
+              ),
+              child: Icon(icone, color: cor, size: 28),
             ),
-          ),
-        ],
+            SizedBox(height: 8),
+            Text(
+              titulo,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                color: corTexto,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
